@@ -3,6 +3,8 @@ package ch.wiss.m223.hangman.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -30,6 +32,7 @@ public class User {
     @NotBlank
     private String email;
     @NotBlank
+    @JsonIgnore
     private String password;
 
     public User(String name, String email, String password) {

@@ -33,6 +33,12 @@ public class WordController {
         return wordRepository.findById(id).orElse(null);
     }
 
+    // Return a random word
+    @GetMapping("/random")
+    public @ResponseBody Word getRandomWord() {
+        return wordRepository.getRandomWord();
+    }    
+
     @DeleteMapping("/{id}")
     public void deleteWord(@PathVariable Long id) {
         wordRepository.deleteById(id);
