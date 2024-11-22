@@ -1,84 +1,74 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-export default function addWord() {
-  const [entries, setEntries] = useState({ nw: "" });
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+export default function AddWord() {
+  const [entries, setEntries] = useState({ word: "" });
 
-  // Funktion zum Aktualisieren des Zustands basierend auf Benutzereingaben
+  // Eingaben im State speichern
   const store = (e) => {
     setEntries({ ...entries, [e.target.name]: e.target.value });
   };
 
-  // Funktion zum Absenden des Formulars
-  const submit = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccess("");
+  // Formular absenden und POST-Anfrage ausführen
+  const handleSubmit = async (event) => {
+    event.preventDefault();
 
-    // Validierung der Eingaben
-    const word = entries.nw?.trim(); // Entferne führende und nachfolgende Leerzeichen
-    if (!word || /\d/.test(word)) {
-      // Überprüfe, ob das Wort leer ist oder eine Zahl enthält
-      setError(
-        "Das Wort darf nicht leer sein und darf keine Zahlen enthalten."
-      );
-      return; // Beende die Funktion, wenn die Validierung fehlschlägt
+    // **Minimal-Validierung**
+    if (!entries.word.trim()) {
+      alert("Das Wort darf nicht leer sein.");
+      return;
     }
 
     try {
-      // Token und Rolle des Benutzers abrufen
-      const user = JSON.parse(localStorage.getItem("user")); // Annahme: "user" enthält Token und Rolle
-      const { token, role } = user || {};
+      // Token aus localStorage abrufen
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
 
-      if (!token || role !== "admin") {
-        setError("Nur Admins dürfen neue Wörter hinzufügen.");
+      if (!token) {
+        alert("Sie sind nicht eingeloggt.");
         return;
       }
 
-      // API-Aufruf zum Hinzufügen eines neuen Worts
+      // POST-Anfrage senden
       const response = await axios.post(
         "http://localhost:8080/words",
-        {
-          content: { word }, // Daten im Body
-        },
+        { word: entries.word },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // Authentifizierung über JWT
-            "Content-Type": "application/json", // Content-Type
+            Authorization: `Bearer ${token}`,
           },
         }
       );
-      setSuccess(
-        `Wort "${response.data.content.word}" erfolgreich hinzugefügt!`
-      );
-      setEntries({ nw: "" }); // Eingabefeld leeren
+
+      // Erfolgsmeldung
+      alert(`Wort "${response.data.word}" erfolgreich hinzugefügt!`);
+      setEntries({ word: "" }); // Eingaben zurücksetzen
     } catch (error) {
-      console.error("Fehler beim Hinzufügen des Worts:", error);
-      setError(
-        error.response?.data?.message || "Fehler beim Hinzufügen des Worts."
+      alert(
+        error.response?.data?.message ||
+          "Ein unerwarteter Fehler ist aufgetreten."
       );
+      console.error("Fehler:", error);
     }
   };
 
   return (
-    <form onSubmit={submit}>
-      <div className="form-control">
-        <label htmlFor="nw">Neues Wort hinzufügen: </label>
-        <input
-          type="text"
-          name="nw"
-          onChange={store}
-          placeholder="Neues Wort"
-          value={entries.nw || ""}
-        />
-      </div>
-      <button type="submit">Submit/Absenden</button>
-      {error && <p className="error">{error}</p>}{" "}
-      {/* Zeige die Fehlermeldung */}
-      {success && <p className="success">{success}</p>}{" "}
-      {/* Zeige die Erfolgsmeldung */}
-    </form>
+    <div>
+      <form onSubmit={handleSubmit}>
+        <h2>Neues Wort hinzufügen</h2>
+        <div className="form-control">
+          <label htmlFor="word">Wort hinzufügen:</label>
+          <input
+            type="text"
+            id="word"
+            name="word"
+            value={entries.word}
+            onChange={store}
+            placeholder="Neues Wort"
+            required
+          />
+        </div>
+        <button type="submit">Hinzufügen</button>
+      </form>
+    </div>
   );
 }

@@ -11,7 +11,7 @@ import ch.wiss.m223.hangman.model.Word;
 import ch.wiss.m223.hangman.repositories.WordRepository;
 
 @RestController
-@RequestMapping(path ="/words")
+@RequestMapping(path = "/words")
 public class WordController {
 
     @Autowired
@@ -24,7 +24,7 @@ public class WordController {
 
     @PostMapping
     public ResponseEntity<Word> createWord(@RequestBody Word Word) {
-                Word savedWord = wordRepository.save(Word);
+        Word savedWord = wordRepository.save(Word);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedWord);
     }
 
@@ -37,11 +37,10 @@ public class WordController {
     @GetMapping("/random")
     public @ResponseBody Word getRandomWord() {
         return wordRepository.getRandomWord();
-    }    
+    }
 
     @DeleteMapping("/{id}")
     public void deleteWord(@PathVariable Long id) {
         wordRepository.deleteById(id);
     }
 }
-

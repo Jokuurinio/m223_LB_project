@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import "./HangmanGame.css";
 
-// Hangman ASCII Art
 const HANGMANPICS = [
   `
   +---+
@@ -73,38 +74,35 @@ function HangmanGame() {
   const [wrongGuesses, setWrongGuesses] = useState(0); // Anzahl der falschen Buchstaben
   const [isGameOver, setIsGameOver] = useState(false); // Spielstatus
   const [isWinner, setIsWinner] = useState(false); // Status bei Gewinn
+  const [error, setError] = useState(""); // Fehleranzeige
 
-  // Funktion zum Abrufen eines zufälligen Worts aus MongoDB
+  // Funktion zum Abrufen eines zufälligen Worts aus dem Backend
   const fetchWord = async () => {
     try {
-      const response = await fetch("http://localhost:8080/words/documents");
-      if (!response.ok) {
-        throw new Error(`HTTP-Fehler! Status: ${response.status}`);
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+      if (!token) {
+        throw new Error("Benutzer nicht authentifiziert.");
       }
 
-      const data = await response.json();
-      console.log("Daten vom Server:", data);
+      const response = await axios.get("http://localhost:8080/words/random", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
 
-      // Überprüfe die Struktur der Daten
-      if (!Array.isArray(data) || data.length === 0) {
-        throw new Error("Unerwartetes Datenformat oder leeres Array");
+      const randomWord = response.data.word;
+
+      if (!randomWord) {
+        throw new Error("Keine gültige Antwort vom Server.");
       }
 
-      // Extrahiere die Wörter
-      const wordsArray = data
-        .map((doc) => doc.content.word)
-        .filter((word) => word); // Korrigierte Extraktion
-      console.log("Wörter Array:", wordsArray);
-
-      if (wordsArray.length === 0) {
-        throw new Error("Keine Wörter gefunden");
-      }
-
-      const randomWord =
-        wordsArray[Math.floor(Math.random() * wordsArray.length)];
-      setWord(randomWord.toUpperCase()); // Zufälliges Wort wählen
-    } catch (error) {
-      console.error("Fehler beim Abrufen der Wörter:", error);
+      setWord(randomWord.toUpperCase());
+      setError(""); // Fehler zurücksetzen
+    } catch (err) {
+      console.error("Fehler beim Abrufen des zufälligen Worts:", err);
+      setError(
+        err.response?.data?.message ||
+          err.message ||
+          "Ein Fehler ist aufgetreten."
+      );
     }
   };
 
@@ -113,9 +111,8 @@ function HangmanGame() {
     fetchWord();
   }, []);
 
-  // Überprüfen, ob der Buchstabe erraten wurde
   const handleGuess = (letter) => {
-    if (guessedLetters.includes(letter) || isGameOver || isWinner) return; // Doppeltes Erraten verhindern
+    if (guessedLetters.includes(letter) || isGameOver || isWinner) return;
 
     const updatedGuessedLetters = [...guessedLetters, letter];
     setGuessedLetters(updatedGuessedLetters);
@@ -125,65 +122,72 @@ function HangmanGame() {
       setWrongGuesses(newWrongGuesses);
 
       if (newWrongGuesses >= HANGMANPICS.length - 1) {
-        setIsGameOver(true); // Spiel verloren
+        setIsGameOver(true);
       }
     } else {
-      // Überprüfen, ob alle Buchstaben erraten wurden
       const allGuessed = word
         .split("")
         .every(
-          (letter) => updatedGuessedLetters.includes(letter) || letter === " "
+          (letter) =>
+            updatedGuessedLetters.includes(letter.toUpperCase()) ||
+            letter === " "
         );
       if (allGuessed) {
-        setIsWinner(true); // Spiel gewonnen
+        setIsWinner(true);
       }
     }
   };
 
-  // Funktion, um den aktuellen Zustand des Worts anzuzeigen (erratene Buchstaben)
   const displayWord = () => {
     return word
       .split("")
-      .map((letter) => (guessedLetters.includes(letter) ? letter : "_"))
+      .map((letter) =>
+        guessedLetters.includes(letter.toUpperCase()) ? letter : "_"
+      )
       .join(" ");
   };
 
-  // Funktion, um das Spiel zurückzusetzen
   const resetGame = () => {
     setGuessedLetters([]);
     setWrongGuesses(0);
     setIsGameOver(false);
-    setIsWinner(false); // Gewinnstatus zurücksetzen
-    fetchWord(); // Neues Wort abrufen
+    setIsWinner(false);
+    setError("");
+    fetchWord();
   };
 
   return (
-    <div>
+    <div className="hangman-container">
       <h1>Hangman</h1>
-      <pre>{HANGMANPICS[wrongGuesses]}</pre> {/* ASCII Hangman anzeigen */}
+      {error && <p className="error">{error}</p>}
+      <pre className="hangman-art">{HANGMANPICS[wrongGuesses]}</pre>
       {isGameOver ? (
         <div>
           <h2>Game Over! Das Wort war: {word}</h2>
-          <button onClick={resetGame}>Neues Spiel</button>
+          <button className="reset-button" onClick={resetGame}>
+            Neues Spiel
+          </button>
         </div>
       ) : isWinner ? (
         <div>
           <h2>Herzlichen Glückwunsch! Du hast das Wort erraten: {word}</h2>
-          <button onClick={resetGame}>Neues Spiel</button>
+          <button className="reset-button" onClick={resetGame}>
+            Neues Spiel
+          </button>
         </div>
       ) : (
         <div>
           <p>
             Falsche Versuche: {wrongGuesses} / {HANGMANPICS.length - 1}
           </p>
-          <p>{displayWord()}</p>
-          <div>
-            {Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ").map((letter) => (
+          <p className="word-display">{displayWord()}</p>
+          <div className="keyboard">
+            {Array.from("ABCDEFGHIJKLMNOPQRSTUVWXYZ").map((letter) => (
               <button
-                className="keyboard"
                 key={letter}
                 onClick={() => handleGuess(letter)}
                 disabled={guessedLetters.includes(letter)}
+                className="keyboard-button"
               >
                 {letter}
               </button>
