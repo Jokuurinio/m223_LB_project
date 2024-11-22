@@ -25,8 +25,8 @@ public class SecurityConfiguration {
   @Autowired
   private AuthenticationEntryPoint unauthorizedHandler;
 
-  private static final String[] EVERYONE = { "/home", "/", "/api/auth/*", };
-  private final static String[] SECURE = { "/private", "/items" };
+  private static final String[] EVERYONE = { "/home", "/", "/api/auth/*" };
+  private final static String[] SECURE = { "/private", "/words" };
   private final static String[] ROLES = { "MODERATOR", "ADMIN" };
 
   @Bean
@@ -70,6 +70,8 @@ public class SecurityConfiguration {
         .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
         .authorizeHttpRequests(auth -> {
           auth.requestMatchers(HttpMethod.POST, SECURE).hasRole("ADMIN");
+          auth.requestMatchers(HttpMethod.GET, SECURE).hasRole("ADMIN");
+          auth.requestMatchers(HttpMethod.DELETE, SECURE).hasRole("ADMIN");
           auth.requestMatchers(EVERYONE).permitAll()
               .anyRequest().authenticated();
         });
