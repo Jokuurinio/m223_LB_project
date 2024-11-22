@@ -6,8 +6,8 @@ import Impressum from './components/Impressum'; // Importiere die Impressum-Komp
 import Spielregeln from './components/Spielregeln'; // Importiere die Spielregeln-Komponente
 import Navi from './components/Navi'; // Importiere die Navigations-Komponente
 import CreateWord from './components/CreateWord'; //Importiere die CreateWord-Komponente
-import DeleteWords from './components/DeleteWord';
-import UpdateWords from './components/UpdateWord';
+import DeleteWords from './pages/DeleteWord';
+import UpdateWords from './pages/UpdateWord';
 import './App.css';
 
 function App() {
