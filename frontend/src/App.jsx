@@ -5,7 +5,7 @@ import HangmanGame from './components/HangmanGame'; // Importiere die HangmanGam
 import Impressum from './components/Impressum'; // Importiere die Impressum-Komponente
 import Spielregeln from './components/Spielregeln'; // Importiere die Spielregeln-Komponente
 import Navi from './components/Navi'; // Importiere die Navigations-Komponente
-import CreateWord from './components/CreateWord'; //Importiere die CreateWord-Komponente
+import AddWord from './components/AddWord'; //Importiere die CreateWord-Komponente
 import DeleteWords from './pages/DeleteWord';
 import UpdateWords from './pages/UpdateWord';
 import './App.css';
@@ -19,7 +19,7 @@ function App() {
         <Route path="/game" element={<HangmanGame />} />
         <Route path="/rules" element={<Spielregeln />} />
         <Route path="/impressum" element={<Impressum />} />
-        <Route path="/words" element={<CreateWord />} />
+        <Route path="/words" element={<AddWord />} />
         <Route path="/delete" element={<DeleteWords />} />
         <Route path="/update" element={<UpdateWords/>} />
       </Routes>
