@@ -1,46 +1,73 @@
 import React, { useState } from "react";
+import axios from "axios";
 
-export default function DeleteWords() {
-    const [wordId, setWordId] = useState(''); // ID des zu löschenden Worts
+export default function DeleteWord() {
+  const [wordId, setWordId] = useState(""); // State für die Wort-ID
+  const [message, setMessage] = useState(""); // Feedback-Meldung
 
-    const handleDelete = (e) => {
-        e.preventDefault();
+  // Eingabe speichern
+  const store = (e) => {
+    setWordId(e.target.value);
+  };
 
-        // Überprüfen, ob die ID eingegeben wurde
-        if (!wordId) {
-            console.error("Keine ID eingegeben.");
-            return;
-        }
+  // DELETE-Anfrage ausführen
+  const handleDelete = async (event) => {
+    event.preventDefault();
 
-        fetch(`http://localhost:8080/words/documents/${wordId}`, {
-            method: "DELETE"
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log("Wort erfolgreich gelöscht.");
-            } else {
-                console.error("Fehler beim Löschen des Worts. Status:", response.status);
-            }
-        })
-        .catch(error => console.error("Fehler:", error));
-    };
+    // Eingabevalidierung
+    if (!wordId.trim()) {
+      alert("Bitte eine gültige ID eingeben.");
+      return;
+    }
 
-    return (
-        <div>
-            <h2>Wort löschen</h2>
-            <form onSubmit={handleDelete}>
-                <div>
-                    <label htmlFor="wordId">Wort ID: </label>
-                    <input
-                        type="text"
-                        id="wordId"
-                        value={wordId}
-                        onChange={(e) => setWordId(e.target.value)}
-                        placeholder="Gib die ID des zu löschenden Worts ein"
-                    />
-                </div>
-                <button type="submit">Löschen</button>
-            </form>
+    try {
+      // Token aus localStorage abrufen
+      const token = JSON.parse(localStorage.getItem("user"))?.token;
+
+      if (!token) {
+        alert("Sie sind nicht eingeloggt.");
+        return;
+      }
+
+      // DELETE-Anfrage senden
+      await axios.delete(`http://localhost:8080/words/${wordId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      // Erfolgsmeldung
+      setMessage(`Wort mit der ID "${wordId}" wurde erfolgreich gelöscht.`);
+      setWordId(""); // Eingabe zurücksetzen
+    } catch (error) {
+      // Fehlermeldung
+      setMessage(
+        error.response?.data?.message ||
+          "Ein unerwarteter Fehler ist aufgetreten."
+      );
+      console.error("Fehler:", error);
+    }
+  };
+
+  return (
+    <div>
+      <form onSubmit={handleDelete}>
+        <h2>Wort löschen</h2>
+        <div className="form-control">
+          <label htmlFor="wordId">Wort ID:</label>
+          <input
+            type="text"
+            id="wordId"
+            name="wordId"
+            value={wordId}
+            onChange={store}
+            placeholder="Gib die ID des zu löschenden Worts ein"
+            required
+          />
         </div>
-    );
+        <button type="submit">Löschen</button>
+      </form>
+      {message && <p>{message}</p>} {/* Feedback anzeigen */}
+    </div>
+  );
 }

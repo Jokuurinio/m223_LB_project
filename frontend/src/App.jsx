@@ -8,12 +8,14 @@ import Navi from "./components/Navi"; // Importiere die Navigations-Komponente
 import AddWord from "./pages/AddWord"; //Importiere die CreateWord-Komponente
 import DeleteWords from "./pages/DeleteWord";
 import UpdateWords from "./pages/UpdateWord";
-import Login from "./pages/Login";
-import Logout from "./pages/Logout";
+import Login from "./components/Login.jsx";
+import Logout from "./components/Logout.jsx";
 import AuthService from "./services/AuthService.js";
+import Signup from "./components/Signup.jsx";
 import "./App.css";
 
 function App() {
+  const currentUser = AuthService.getCurrentUser();
   return (
     <>
       <Navi />
@@ -25,14 +27,14 @@ function App() {
         <Route path="/words" element={<AddWord />} />
         <Route path="/delete" element={<DeleteWords />} />
         <Route path="/update" element={<UpdateWords />} />
+        {!currentUser && <Route path="/signup" element={<Signup />} />}
       </Routes>
-      {AuthService.getCurrentUser() ? (
+      {currentUser ? (
         <>
           <Logout />
         </>
       ) : (
         <>
-          {" "}
           <Login />
         </>
       )}

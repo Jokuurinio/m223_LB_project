@@ -19,27 +19,25 @@ const Navi = () => {
   return (
     <nav className="navbar">
       <ul>
-        {/* Startseite */}
         <li>
           <Link to="/">Startseite</Link>
         </li>
-
-        {/* Spiel (nur sichtbar für angemeldete Benutzer) */}
         {isLoggedIn && (
           <li>
             <Link to="/game">Hangman-Spiel</Link>
           </li>
         )}
-
-        {/* Spielregeln und Impressum (sichtbar für alle) */}
         <li>
           <Link to="/rules">Spielregeln</Link>
         </li>
         <li>
           <Link to="/impressum">Impressum</Link>
         </li>
-
-        {/* Admin-spezifische Elemente */}
+        {!isLoggedIn && (
+          <li>
+            <Link to="/signup">Benutzer registrieren</Link>
+          </li>
+        )}
         {isAdmin && (
           <>
             <li>
