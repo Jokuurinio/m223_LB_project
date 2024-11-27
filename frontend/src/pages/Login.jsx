@@ -1,5 +1,6 @@
 import { useState } from "react";
 import AuthService from "../services/AuthService.js";
+import "./Auth.css";
 
 function Login({ onLogin }) {
   const [entries, setEntries] = useState({
@@ -52,7 +53,9 @@ function Login({ onLogin }) {
             required
           />
         </div>
-        <button type="submit">Login</button>
+        <button className="login-button" type="submit">
+          Login
+        </button>
       </form>
     </div>
   );
