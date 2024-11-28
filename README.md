@@ -19,28 +19,52 @@ In diesem Projekt haben wir, Fabian und Mazlum, ein bestehendes Hangman-Spiel in
 - [Test Protokoll](https://linktotestprotokoll)
 - [Arbeitsjournal](https://linktodocumentation)
 
-## Installation
+## Installationsanleitung
 
-#### Datenbank
+### Abhängigkeiten
 
-Bevor man das [Frontend](https://linktofrontend) und [Backend](https://linktobackend) installieren und ausführen benötigen wir eine Datenbank. Im Backend-Ornder befindet sich ein docker-compose welches für eine isolierte Instanz der Datenbank geeignet ist.
-Befindet man sich mit dem Terminal im korrekten Verzeichnis:
+- **Git**: Zum Klonen des Repositories und Versionierung.
+- **Docker**: Für das Setup und Management der MySQL-Datenbank mithilfe von Docker Compose.
 
-- ...\m223_LB_project\backend\hangman
-  kann man die Instanz mit folgendem Befehl ausführen:
+### Backend
 
-```bash
-docker compose up
-```
+Stellen Sie sicher, dass alle Abhängigkeiten installiert sind, bevor Sie beginnen:
 
-#### [Frontend](https://linktofrontend)
+1. **Repository klonen**
 
-1. Projekt im Editor deiner Wahl öffnen.
-2. Navigiere mithilfe des integrierten Terminals in das Frontend-Verzeichnis:
+   Öffnen Sie ein Terminal und klonen Sie das Git-Repository:
+
+   ```bash
+   git clone https://github.com/Jokuurinio/m223_LB_project
+   ```
+
+2. **Docker-Container starten**
+
+   Wechseln Sie in das Projektverzeichnis und starten Sie das Docker-Setup:
+
+   ```bash
+   docker-compose up -d
+   ```
+
+3. **Container prüfen**
+
+   Vergewissern Sie sich, dass der MySQL-Container läuft, indem Sie den Befehl `docker ps` ausführen oder Docker Desktop verwenden.
+
+4. **Spring Boot-Anwendung starten**
+
+   Starten Sie die Spring Boot-Anwendung mit Maven:
+
+   ```bash
+   mvn spring-boot:run
+   ```
+
+### Frontend
+
+1. **In das Frontend-Verzeichnis wechseln**
 
 - ...\m223_LB_project\frontend
 
-3. Installiere die Abhängigkeiten und starte eine Instanz oder Entwicklerinstanz auf Port 5173 starten:
+2. **Installiere die Abhängigkeiten und starte eine Instanz oder Entwicklerinstanz auf Port 5173 starten:**
 
 ```bash
 npm install
@@ -50,26 +74,13 @@ npm install
 npm run dev
 ```
 
-4. Eventuell werden noch weitere Bibliotheken benötigt wie Axios und React-Router-Dom.
+3. **Eventuell werden noch weitere Bibliotheken benötigt wie Axios und React-Router-Dom.**
    Diese Biblitheken können mit dem Befehl npm install installiert werden.
 
 ```bash
 npm install axios
 
 npm install react-router-dom
-```
-
-#### [Backend](https://linktobackend)
-
-Im Editor des Vertrauens ein neues Terminal öffnen.
-Mithilfe des Terminals welches im Editor integriert is in das Backend-Verzeichnis wechseln:
-
-- ...\m223_LB_project\backend\hangman
-
-Das Backend starten mit:
-
-```bash
-mvn spring-boot:run
 ```
 
 ## User Stories
@@ -136,7 +147,7 @@ Im diesem Projekt wurden folgende Frameworks und Tools verwendet:
 
 #### 22.11.24 Block 7
 
-Im Block 7 haben ich und Fabian uns mit der Arbeitsplanung beschäftigt. Nachdem festgelegt wurde wer welche Aufgaben trägt haben wir uns an die Arbeit gemacht.
+Im Block 7 haben Fabian und ich uns mit der Arbeitsplanung beschäftigt. Nachdem festgelegt wurde wer welche Aufgaben trägt haben wir uns an die Arbeit gemacht.
 Ich habe mit der Dokumentation begonnen und unseren Arbeitsplan visualisiert.
 
 #### 22.11.24 Block 8
@@ -145,7 +156,23 @@ Im Block 8 ging es los mit Frontend. Alle notwendigen Fetch-Methoden wurden umge
 
 ### Fabian
 
-#### 22.11.24
+#### 22.11.24 Block 7
+
+Aufwand: 4h
+Nach dem wir uns für unserere Projektidee entschieden haben, haben wir eine grobe Aufgabenteilung aufgestellt. Mazlum wird sich mit dem Frontend beschäftigen, wärend ich mich auf das Backend fokusiere. Damit sollen die Aufgaben passend verteilt werden und wir sollen nicht unnötig einander in die Quere kommen. 
+Anschliessend habe ich die bereits zuvor im Unterricht behandelten Log-in und security files für das Backend zu erstellen. 
+
+#### 22.11.24 Block 8
+
+Aufwand: 4h
+Es wurden die ersten Endpoints erstellt und an Mazlum kommuniziert, damit er weiss, welche er ansprechen kann. Die Funktion, dass man User anlegen sowie Wörter anlegen und löschen kann funktioniert aus Backend sicht bereits und wurde mit Insomnia überprüft und getestet.
+
+#### 28.11.24 Block 9
+
+Aufwand: 4h
+Die Dokumentation wurde ausgearbeitet und auf Stand gebracht.
+Nach einem harten kampf wurden Unit-Test zum einlesen und löschen von Wörtern implementiert.
+Produktpräsentation vorbereitet und auf Projektabschluss vorbereitet.
 
 ## Login-Ablauf
 

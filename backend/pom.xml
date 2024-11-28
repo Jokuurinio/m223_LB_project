@@ -112,6 +112,16 @@
 				<artifactId>jaxb-api</artifactId>
 				<version>2.3.1</version>
 		 </dependency>
+		 <!-- für die TEST -->
+		 <dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
