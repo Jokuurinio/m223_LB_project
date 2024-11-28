@@ -19,7 +19,10 @@ In diesem Projekt haben wir, Fabian und Mazlum, ein bestehendes Hangman-Spiel in
     - [Abhängigkeiten](#abhängigkeiten)
     - [Backend](#backend)
     - [Frontend](#frontend)
+  - [Backend-Architektur](#backend-architektur)
+  - [Frontend-Architektur](#frontend-architektur)
   - [User Stories](#user-stories)
+  - [Transaktionen](#transaktionen)
   - [Sicherheitskonzept](#sicherheitskonzept)
   - [Arbeitsplanung](#arbeitsplanung)
       - [Fazit Arbeitsplanung](#fazit-arbeitsplanung)
@@ -107,6 +110,14 @@ npm install axios
 
 npm install react-router-dom
 ```
+## Backend-Architektur
+
+Das Backend besteht aus einer MySQL Datenbank, welche mittels Docker aufgesetzt wurde. Die notwendige Installation dazu ist oben beschrieben. Des Weiteren wurden gewisse Endpunkte durch Berechtigungen geschützt, dass beispielsweise nur der Admin Wörter hinzufügen und löschen kann. Die jeweiligen Klassen wurden in den ensprechenden Ordner abgelegt. Was im vergleich zu früheren Projekten dazu kam, war die Multiuser Fähigkeit. Diese wurden gemäss den Vorlagen, welche im Modul behandelt wurden umgesetzt. 
+
+## Frontend-Architektur
+Unser Frontend besteht aus mehreren components und pages welche in den gleichbenamten Orndern abgelegt wurden. Wir haben eine Startseite welche den Benutzer willkommen heisst.
+Solange man nicht eingelogt ist gibt es keine Möglichkeit das Spiel zu spielen. Man hat auch die Möglichkeit sich zu registrieren.
+Wenn man sich als admin anmeldet hat man die auch die verschiedenen CRUD-Operationen zur Verfügung. 
 
 ## User Stories
 
@@ -137,6 +148,10 @@ Akzeptanzkriterien:
    - Jedes Wort in der Liste hat einen Button "Löschen".
    - Nach dem Klick auf "Löschen" wird das entsprechende Wort aus der Datenbank entfernt.
    - Eine Erfolgsmeldung wird angezeigt, wenn das Wort erfolgreich gelöscht wurde.
+
+## Transaktionen
+
+Wir haben uns bewusst gegen Transaktionen entschieden, da wir erstens genügend andere Probleme hatten, welche wir jonglieren mussten und weil es aus unserer Sicht bei dieser Anwendung keine konkrete Funktion gibt welche den Aufwand für das implementieren einer Transaktion rechtfertigen würde.
 
 ## Sicherheitskonzept
 
