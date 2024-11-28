@@ -19,7 +19,10 @@ In diesem Projekt haben wir, Fabian und Mazlum, ein bestehendes Hangman-Spiel in
     - [Abhängigkeiten](#abhängigkeiten)
     - [Backend](#backend)
     - [Frontend](#frontend)
+  - [Backend-Architektur](#backend-architektur)
+  - [Frontend-Architektur](#frontend-architektur)
   - [User Stories](#user-stories)
+  - [Transaktionen](#transaktionen)
   - [Sicherheitskonzept](#sicherheitskonzept)
   - [Arbeitsplanung](#arbeitsplanung)
       - [Fazit Arbeitsplanung](#fazit-arbeitsplanung)
@@ -107,6 +110,12 @@ npm install axios
 
 npm install react-router-dom
 ```
+## Backend-Architektur
+
+## Frontend-Architektur
+Unser Frontend besteht aus mehreren components und pages welche in den gleichbenamten Orndern abgelegt wurden. Wir haben eine Startseite welche den Benutzer willkommen heisst.
+Solange man nicht eingelogt ist gibt es keine Möglichkeit das Spiel zu spielen. Man hat auch die Möglichkeit sich zu registrieren.
+Wenn man sich als admin anmeldet hat man die auch die verschiedenen CRUD-Operationen zur Verfügung. 
 
 ## User Stories
 
