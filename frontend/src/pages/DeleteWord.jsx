@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./crud-word.css";
 
 export default function DeleteWord() {
   const [wordId, setWordId] = useState(""); // State für die Wort-ID
@@ -14,14 +15,12 @@ export default function DeleteWord() {
   const handleDelete = async (event) => {
     event.preventDefault();
 
-    // Eingabevalidierung
     if (!wordId.trim()) {
       alert("Bitte eine gültige ID eingeben.");
       return;
     }
 
     try {
-      // Token aus localStorage abrufen
       const token = JSON.parse(localStorage.getItem("user"))?.token;
 
       if (!token) {
@@ -30,22 +29,22 @@ export default function DeleteWord() {
       }
 
       // DELETE-Anfrage senden
-      await axios.delete(`http://localhost:8080/words/${wordId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const response = await axios.delete(
+        `http://localhost:8080/words/${wordId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-      // Erfolgsmeldung
       setMessage(`Wort mit der ID "${wordId}" wurde erfolgreich gelöscht.`);
-      setWordId(""); // Eingabe zurücksetzen
+      console.log("DELETE erfolgreich:", response);
+      setWordId("");
     } catch (error) {
-      // Fehlermeldung
       setMessage(
         error.response?.data?.message ||
           "Ein unerwarteter Fehler ist aufgetreten."
       );
-      console.error("Fehler:", error);
+      console.error("Fehler bei DELETE:", error.response || error.message);
     }
   };
 
@@ -65,9 +64,11 @@ export default function DeleteWord() {
             required
           />
         </div>
-        <button type="submit">Löschen</button>
+        <button className="delete-button" type="submit">
+          Löschen
+        </button>
       </form>
-      {message && <p>{message}</p>} {/* Feedback anzeigen */}
+      {message && <p>{message}</p>}
     </div>
   );
 }

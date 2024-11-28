@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./crud-word.css";
 
 export default function AddWord() {
   const [entries, setEntries] = useState({ word: "" });
@@ -67,7 +68,9 @@ export default function AddWord() {
             required
           />
         </div>
-        <button type="submit">Hinzufügen</button>
+        <button className="add-button" type="submit">
+          Hinzufügen
+        </button>
       </form>
     </div>
   );
