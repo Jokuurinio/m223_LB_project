@@ -127,7 +127,7 @@ Für die Arbeitsplanung haben wir uns ausgetauscht und eine grobe Aufgabensammlu
 
 #### Fazit Arbeitsplanung
 
-a
+Nach einer kurzen Besprechung der Aufgaben haben wir uns aufgeteilt. Fabian übernahm die Arbeiten am Backend und Mazlum die Arbeiten im Frontend. Zur Begrüdung der Aufteilung führte die Vorerfahrung über das Frontend-Projekt von Mazlum. Zu Beginn standen wir unserer Arbeitsplanung sehr skeptisch gegenüber. Im letzten Block stellte sich jedoch heraus, dass überwiegend sehr gute Entscheidungen getroffen wurden. Das Aufteilen des Front- und Backends unter Mazlum und Fabian hat sehr geholfen, damit jeder einen Schwerpunkt hat und sich im zugeteilten Bereich besser auskennt.
 
 ## Frameworks
 
@@ -154,13 +154,17 @@ Ich habe mit der Dokumentation begonnen und unseren Arbeitsplan visualisiert.
 
 Im Block 8 ging es los mit Frontend. Alle notwendigen Fetch-Methoden wurden umgeschrieben und greifen über die Axios-Bibliothek auf unser Backend zu. Authorisierung wurde implementiert, Spiel hat letztendlich auch funktioniert.
 
+#### 22.11.24 Block 9
+
+Im Block 9 versuchte ich die DeleteWord-funktion zu implementieren. Die Problematik bestand darin, dass Delete-Requests nict zugelassen werden, wenn diese vom Frontend durchgeführt werden. Das umzusetzen stellte sich als eine gröbere Herausforderung dar, da Spring-boot keine hilfreiche Outputs lieferte. Somit haben wir uns entschieden mit der Päsentation forzufahren.
+
 ### Fabian
 
 #### 22.11.24 Block 7
 
 Aufwand: 4h
-Nach dem wir uns für unserere Projektidee entschieden haben, haben wir eine grobe Aufgabenteilung aufgestellt. Mazlum wird sich mit dem Frontend beschäftigen, wärend ich mich auf das Backend fokusiere. Damit sollen die Aufgaben passend verteilt werden und wir sollen nicht unnötig einander in die Quere kommen. 
-Anschliessend habe ich die bereits zuvor im Unterricht behandelten Log-in und security files für das Backend zu erstellen. 
+Nach dem wir uns für unserere Projektidee entschieden haben, haben wir eine grobe Aufgabenteilung aufgestellt. Mazlum wird sich mit dem Frontend beschäftigen, wärend ich mich auf das Backend fokusiere. Damit sollen die Aufgaben passend verteilt werden und wir sollen nicht unnötig einander in die Quere kommen.
+Anschliessend habe ich die bereits zuvor im Unterricht behandelten Log-in und security files für das Backend zu erstellen.
 
 #### 22.11.24 Block 8
 

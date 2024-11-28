@@ -26,7 +26,7 @@ public class SecurityConfiguration {
   private AuthenticationEntryPoint unauthorizedHandler;
 
   private static final String[] EVERYONE = { "/home", "/", "/api/auth/*" };
-  private final static String[] SECURE = { "/private", "/words", "/words/*" };
+  private final static String[] SECURE = { "/private", "/words" };
   private final static String[] ROLES = { "MODERATOR", "ADMIN" };
 
   @Bean
