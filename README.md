@@ -183,6 +183,13 @@ Produktpräsentation vorbereitet und auf Projektabschluss vorbereitet.
 
 ## Test Protokoll
 
+### Backend
+
+#### WordControllerTest
+
+Prüft, ob neue Wörter hinzugefügt werden können und gelöscht werden können.
+Wichtigste Funktion des ganzen Spiels.
+
 ### Frontend
 
 #### App.test.js
