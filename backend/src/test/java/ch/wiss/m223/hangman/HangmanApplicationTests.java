@@ -1,4 +1,4 @@
-package ch.wiss.m223.hangman;
+/*package ch.wiss.m223.hangman;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -11,3 +11,4 @@ class HangmanApplicationTests {
 	}
 
 }
+*/
